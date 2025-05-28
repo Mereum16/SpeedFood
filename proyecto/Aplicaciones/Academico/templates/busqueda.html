@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Buscar Pedidos{% endblock %}
+{% block body %}
+<h2>Búsqueda de Pedidos</h2>
+
+<form method="get" class="form-inline mb-3">
+    <input type="text" name="q" class="form-control mr-2" placeholder="Buscar por nombre o código" value="{{ query }}">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+{% if resultados %}
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in resultados %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ pedido.codigo }}</td>
+            <td>{{ pedido.nombre }}</td>
+            <td>{{ pedido.creditos }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif query %}
+<p>No se encontraron resultados para "{{ query }}".</p>
+{% endif %}
+{% endblock %}

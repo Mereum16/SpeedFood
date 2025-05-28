@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Reporte de Pedidos{% endblock %}
+
+{% block body %}
+<h2>Reporte de Pedidos</h2>
+<form method="get" class="form-inline mb-3">
+    <label for="creditos" class="mr-2">Filtrar por codigo:</label>
+    <input type="number" name="creditos" id="creditos" class="form-control mr-2" value="{{ creditos_filter }}">
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ pedido.codigo }}</td>
+            <td>{{ pedido.nombre }}</td>
+            <td>${{ pedido.creditos }}</td>
+            <td>
+                <a href="{% url 'editar_pedido' pedido.codigo %}" class="btn btn-sm btn-info">Editar</a>
+                <a href="{% url 'eliminar_pedido' pedido.codigo %}" class="btn btn-sm btn-danger btnEliminacion">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay pedidos para mostrar.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
